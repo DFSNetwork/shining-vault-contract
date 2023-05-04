@@ -78,6 +78,7 @@ ACTION shiningvault::refund(uint64_t id)
 {
    refunds _refunds(get_self(), get_self().value);
    auto itr = _refunds.require_find(id, "refund not found");
+   require_auth(itr->user); 
    check(itr->release_time.sec_since_epoch() <= current_time_point().sec_since_epoch(), "refund is not available yet");
 
    // sell rex and withraw rex fund
